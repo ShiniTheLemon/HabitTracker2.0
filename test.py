@@ -45,11 +45,11 @@ class App(tkinter.Tk):
         # Example labels that serve as placeholders for other widgets
 
 
-        Button(self.tool_bar, text="Add New Habit", relief=RAISED,command=openNewWindow).grid(row=0, column=0, padx=5, pady=5,
+        Button(self.tool_bar, text="Add New Habit", relief=RAISED,command=AddNewHAbit).grid(row=0, column=0, padx=5, pady=5,
                                                                  ipadx=10)  # ipadx is padding inside the Label widget
-        Button(self.tool_bar, text="Edit My Habits", relief=RAISED).grid(row=1, column=0, padx=5, pady=5, ipadx=10)
-        Button(self.tool_bar, text="Track My Habits", relief=RAISED).grid(row=2, column=0, padx=5, pady=5, ipadx=10)
-        Button(self.tool_bar, text="View My Progress", relief=RAISED).grid(row=3, column=0, padx=5, pady=5, ipadx=10)
+        Button(self.tool_bar, text="Edit My Habits", relief=RAISED,command=EditHabits).grid(row=1, column=0, padx=5, pady=5, ipadx=10)
+        Button(self.tool_bar, text="Track My Habits", relief=RAISED,command=TrackHabits).grid(row=2, column=0, padx=5, pady=5, ipadx=10)
+        Button(self.tool_bar, text="View My Progress", relief=RAISED,command=View).grid(row=3, column=0, padx=5, pady=5, ipadx=10)
         self.calendar()
 
     def calendar(self):
@@ -85,43 +85,57 @@ class App(tkinter.Tk):
 
 
 
-def openNewWindow():
+def AddNewHAbit():
         # Toplevel object which will
         # be treated as a new window
 
     #master = Tk()
     newWindow = Tk()
+    tkfont.Font(family='Helvetica', size=18, weight="bold", slant="italic")
 
         # sets the title of the
         # Toplevel widget
-    newWindow.title("New Window")
+    newWindow.title("Add New Habit")
 
         # sets the geometry of toplevel
-    newWindow.geometry("200x200")
+    newWindow.geometry("200x150")
 
         # A Label widget to show in toplevel
     Label(newWindow,
-              text="Username").pack()
-    text1=tkinter.Text(newWindow,height=2, width=10)
+              text="HABIT  NAME",font='Helvetica').pack()
+    text1=tkinter.Text(newWindow,height=3, width=20,font='Helvetica')
 
-    text2 = tkinter.Text(newWindow, height=2, width=10)
+
 
     def save_input():
-        username=text1.get(1.0,"end-1c")
-        password=text2.get(1.0,"end-1c")
-
-        print(username,password)
-        dao.register_admin(username,password)
+        habit_name=text1.get(1.0,"end-1c")
+        print(habit_name)
+        creds=dao.admin_creds()
+        print(creds)
         newWindow.destroy()
-    button=tkinter.Button(newWindow,text="Save",command=save_input)
+    button=tkinter.Button(newWindow,text="Save",font='Helvetica',command=save_input)
     text1.pack()
-    Label(newWindow,
-              text="Password").pack()
-    text2.pack()
     button.pack()
 
 
+def EditHabits():
+    newWindow=Tk()
+    newWindow.title("Edit Habits")
+    newWindow.geometry("500x500")
 
+    frame=newWindow.frame()
+    #frame.grid(row=0,column=0,padx=10,pady=10)
+    #creds= dao.admin_creds()
+    #habits=dao.show_user_habits()
+
+
+
+
+def TrackHabits():
+    pass
+
+def View():
+    pass
 
 
 app=App()
